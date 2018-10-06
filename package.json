@@ -1,7 +1,7 @@
 {
-  "name": "js-router",
+  "name": "simple-sliders",
   "version": "0.0.1",
-  "description": "Simple router",
+  "description": "Simple slider",
   "private": true,
   "scripts": {
     "build": "webpack -w",
