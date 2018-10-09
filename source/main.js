@@ -165,12 +165,12 @@ class NvSlider {
     resetSlideComponents(){
         this.toBeReseted.childNodes.forEach(el=>{
             el.setAttribute('data-bi-deg', 0);
-            el.style.webkitTransform = `rotateX(0deg)`;
-            el.style.MozTransform = `rotateX(0deg)`;
-            el.style.msTransform = `rotateX(0deg)`;
-            el.style.OTransform = `rotateX(0deg)`;
-            el.style.transform = `rotateX(0deg)`;
-            el.style.opacity = 1; 
+            el.style.webkitTransform = null;
+            el.style.MozTransform = null;
+            el.style.msTransform = null;
+            el.style.OTransform = null;
+            el.style.transform = null;
+            el.style.opacity = null; 
         })
     }
 }
