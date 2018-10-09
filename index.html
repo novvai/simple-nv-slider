@@ -8,6 +8,22 @@
     <script src="/dist/js/nv-slider.bundle.js"></script>
 </head>
 <body>
-    
+    <div data-bi-slider="main"></div>
+    <div data-bi-slider="next">></div>
+    <div data-bi-slider="prev"><</div>
+
+    <script>
+        window.document.addEventListener("DOMContentLoaded", ()=>{
+            console.log('done');
+            let slider = new NvSlider({height:'500px'});
+            slider.loadImages([
+                'https://i.ytimg.com/vi/NpnUaz-GEqs/maxresdefault.jpg',
+                'https://i.ytimg.com/vi/WZerlq1RYUQ/maxresdefault.jpg',
+                'https://i.ytimg.com/vi/QARCTcMa8gk/maxresdefault.jpg'
+            ])
+            slider.ini();
+        });
+    </script>
+
 </body>
 </html>
