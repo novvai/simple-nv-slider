@@ -10,7 +10,7 @@ class NvSlider {
             height: "300px",
             slices:10,
             offset: 500,
-            speed: 60
+            auto: 5000
         }, options)
         this.images = [];
         this.bootstrap();
@@ -23,8 +23,12 @@ class NvSlider {
         return this;
     }
     ini() {
-        window.addEventListener('resize', this.reRenderSlider.bind(this))
+        window.addEventListener('resize', this.reRenderSlider.bind(this));
         this.makeSlides();
+        this.setAuto()
+    }
+    setAuto(){
+        this.autoAnim = setInterval(this.next.bind(this), this.options.auto);
     }
 
     reRenderSlider(){
@@ -75,6 +79,16 @@ class NvSlider {
         this.container.setAttribute("style", `display:block; width:${this.options.width};height:${this.options.height};position:relative;`);
         this.prevBtn.addEventListener('click', this.prev.bind(this));
         this.nextBtn.addEventListener('click', this.next.bind(this));
+
+        this.container.addEventListener('mouseenter', this.stopAuto.bind(this))
+        this.container.addEventListener('mouseleave', this.activateAuto.bind(this))
+    }
+
+    activateAuto(){
+        this.setAuto();
+    }
+    stopAuto(){
+        clearInterval(this.autoAnim);
     }
 
     next() {
