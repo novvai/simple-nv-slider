@@ -50,7 +50,8 @@ Slide change can be activated outside of the Slider private context
 ```
 
 #### Future Releases : 
-1. Adding automatic sliding.
+1. Adding automatic sliding. - Implemented in release 0.0.2;
+
 
 
 
