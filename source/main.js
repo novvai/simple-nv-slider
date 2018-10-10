@@ -37,10 +37,9 @@ class NvSlider {
         this.makeSlides();
     }
     makeSlides() {
-        let imageLen = this.images.length;
         this.images.forEach((image, index) => {
             let slide = document.createElement('div'),
-                zIndex = imageLen--;
+                zIndex = (index == 0)? "2":"1";
             slide.setAttribute('style', `position:absolute;top:0;left:0;width:100%;height:100%;z-index:${zIndex}`);
             slide.setAttribute('class', `slide`);
             const partHeight = this.container.offsetHeight;
