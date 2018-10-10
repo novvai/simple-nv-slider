@@ -23,22 +23,26 @@ class NvSlider {
         return this;
     }
     ini() {
+        window.addEventListener('resize', this.reRenderSlider.bind(this))
         this.makeSlides();
     }
 
+    reRenderSlider(){
+        this.animating = false;
+        this.container.innerHTML = "";
+        this.makeSlides();
+    }
     makeSlides() {
         let imageLen = this.images.length;
         this.images.forEach((image, index) => {
             let slide = document.createElement('div'),
                 zIndex = imageLen--;
-                console.log(zIndex);
             slide.setAttribute('style', `position:absolute;top:0;left:0;width:100%;height:100%;z-index:${zIndex}`);
             slide.setAttribute('class', `slide`);
             const partHeight = this.container.offsetHeight;
             const fullWidth = this.container.offsetWidth;
             const partWidth = this.container.offsetWidth / this.options.slices;
             let nextPart = 0;
-            // console.log(part);
             for (let i = 0; i < this.options.slices; i++) {
                 let slideItem = document.createElement('div');
                 slideItem.setAttribute('style', `background-image:url(${image});background-position: ${nextPart}px 0px;background-size: ${fullWidth}px ${partHeight}px; background-repeat: no-repeat; width:${partWidth}px;height:${partHeight}px;display:inline-block`)
@@ -129,48 +133,34 @@ class NvSlider {
         this.currentSlide.style.zIndex = 2;
     }
 
-    rotateEl(el, promise) {
-        let deg = el.getAttribute('data-bi-deg') ? el.getAttribute('data-bi-deg') : 0;
-        deg = parseFloat(deg);
-        if (deg <= 90) {
-            el.style.webkitTransform = `rotateX(${deg}deg)`;
-            el.style.MozTransform = `rotateX(${deg}deg)`;
-            el.style.msTransform = `rotateX(${deg}deg)`;
-            el.style.OTransform = `rotateX(${deg}deg)`;
-            el.style.transform = `rotateX(${deg}deg)`;
-            el.style.opacity = 1 - (deg+10)/100;
-            deg += 0.5;
-
-            el.setAttribute('data-bi-deg', deg);
-            return setTimeout(this.rotateEl.bind(this, el, promise), this.options.computedSpeed);
-        } else {
-            promise(true);
-        }
-    }
     animate() {
         this.promises = [];
-        let offset = 0;
+        let offset = 10;
+        this.currentSlide.classList.add('nv-slide-trans');
+
         this.currentSlide.childNodes.forEach((node, i) => {
-            let resolve;
-            let promise = new Promise((r, e) => {
-                resolve = r;
-            });
+            let result;
+            let promise = new Promise((r,e)=>{
+                result=r;
+           });
+           
+           node.addEventListener('transitionend', ()=>{
+                result()
+           });
 
-            setTimeout(this.rotateEl.bind(this, node, resolve), offset)
+           setTimeout(()=>{
+                node.classList.add("nv-slide-rotate");
+           }, offset)
 
-            offset += this.options.offset;
-            this.promises.push(promise);
+           offset += this.options.offset;
+
+           this.promises.push(promise); 
         })
     }
     resetSlideComponents(){
+        this.toBeReseted.classList.remove('nv-slide-trans')
         this.toBeReseted.childNodes.forEach(el=>{
-            el.setAttribute('data-bi-deg', 0);
-            el.style.webkitTransform = null;
-            el.style.MozTransform = null;
-            el.style.msTransform = null;
-            el.style.OTransform = null;
-            el.style.transform = null;
-            el.style.opacity = null; 
+           el.classList.remove("nv-slide-rotate");
         })
     }
 }
