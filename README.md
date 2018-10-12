@@ -36,7 +36,8 @@ HTML
   "height": "300px", //  the heigh of the parent container used for further calculations and styling
   "slices":10, // How many slices is going to have for a single slide 
   "offset": 500, // ms between every slice triggering effect
-  "speed": 60 // Depricated - animation speed
+  "speed": 60, // Depricated - animation speed
+  "auto":5000 // ms between automatic slide change
 }
 
 ```
